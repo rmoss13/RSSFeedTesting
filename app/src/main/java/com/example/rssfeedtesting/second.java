@@ -9,7 +9,7 @@ public class second extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.second_main);
-        WebView w1=(WebView)findViewById(R.id.webView);
+        WebView w1 = (WebView) findViewById(R.id.webView);
         w1.loadUrl("http://tutorialspoint.com/android/sampleXML.xml");
     }
 }

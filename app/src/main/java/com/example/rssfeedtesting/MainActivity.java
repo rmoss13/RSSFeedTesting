@@ -10,9 +10,9 @@ import android.widget.EditText;
 
 
 public class MainActivity extends Activity {
-    EditText title,link,description;
-    Button b1,b2;
-    private String finalUrl="http://tutorialspoint.com/android/sampleXML.xml";
+    EditText title, link, description;
+    Button fetchButton, resultButton;
+    private String finalUrl = "http://tutorialspoint.com/android/sampleXML.xml";
     private HandleXML obj;
 
     @Override
@@ -24,25 +24,25 @@ public class MainActivity extends Activity {
         link = (EditText) findViewById(R.id.editText2);
         description = (EditText) findViewById(R.id.editText3);
 
-        b1=(Button)findViewById(R.id.button);
-        b2=(Button)findViewById(R.id.button2);
-        b1.setOnClickListener(new View.OnClickListener() {
+        fetchButton = (Button) findViewById(R.id.button);
+        resultButton = (Button) findViewById(R.id.button2);
+        fetchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 obj = new HandleXML(finalUrl);
                 obj.fetchXML();
 
-                while(obj.parsingComplete);
+                while (obj.parsingComplete) ;
                 title.setText(obj.getTitle());
                 link.setText(obj.getLink());
                 description.setText(obj.getDescription());
             }
         });
 
-        b2.setOnClickListener(new View.OnClickListener() {
+        resultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in=new Intent(MainActivity.this,second.class);
+                Intent in = new Intent(MainActivity.this, second.class);
                 startActivity(in);
             }
         });

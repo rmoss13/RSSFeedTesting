@@ -17,33 +17,33 @@ public class HandleXML {
     private XmlPullParserFactory xmlFactoryObject;
     public volatile boolean parsingComplete = true;
 
-    public HandleXML(String url){
+    public HandleXML(String url) {
         this.urlString = url;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
 
-    public String getLink(){
+    public String getLink() {
         return link;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
     public void parseXMLAndStoreIt(XmlPullParser myParser) {
         int event;
-        String text=null;
+        String text = null;
 
         try {
             event = myParser.getEventType();
 
             while (event != XmlPullParser.END_DOCUMENT) {
-                String name=myParser.getName();
+                String name = myParser.getName();
 
-                switch (event){
+                switch (event) {
                     case XmlPullParser.START_TAG:
                         break;
 
@@ -53,19 +53,13 @@ public class HandleXML {
 
                     case XmlPullParser.END_TAG:
 
-                        if(name.equals("title")){
+                        if (name.equals("title")) {
                             title = text;
-                        }
-
-                        else if(name.equals("link")){
+                        } else if (name.equals("link")) {
                             link = text;
-                        }
-
-                        else if(name.equals("description")){
+                        } else if (name.equals("description")) {
                             description = text;
-                        }
-
-                        else{
+                        } else {
                         }
 
                         break;
@@ -75,15 +69,13 @@ public class HandleXML {
             }
 
             parsingComplete = false;
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void fetchXML(){
-        Thread thread = new Thread(new Runnable(){
+    public void fetchXML() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -108,9 +100,7 @@ public class HandleXML {
 
                     parseXMLAndStoreIt(myparser);
                     stream.close();
-                }
-
-                catch (Exception e) {
+                } catch (Exception e) {
                 }
             }
         });
