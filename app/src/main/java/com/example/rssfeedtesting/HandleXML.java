@@ -10,31 +10,17 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import android.util.Log;
 
 public class HandleXML {
-    private String title = "title";
-    private String link = "link";
-    private String description = "description";
-    private String url = "";
     private String urlString = null;
     private XmlPullParserFactory xmlFactoryObject;
     public volatile boolean parsingComplete = true;
+    private XMLItem item;
 
     public HandleXML(String url) {
         this.urlString = url;
+        item = new XMLItem();
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getUrl() { return url;}
+    public XMLItem getItem(){ return item;}
 
     public void parseXMLAndStoreIt(XmlPullParser myParser) {
         int event;
@@ -55,16 +41,14 @@ public class HandleXML {
                         break;
 
                     case XmlPullParser.END_TAG:
-
                         if (name.equals("title")) {
-                            title = text;
+                            item.setTitle(text);
                         } else if (name.equals("link")) {
-                            link = text;
+                            item.setLink(text);
                         } else if (name.equals("description")) {
-                            description = text;
+                            item.setDescription(text);
                         } else if (name.equals("img")){
-                            url = myParser.getAttributeValue(null, "src");
-                            Log.d(null,"url"+url);
+                            item.setUrl(myParser.getAttributeValue(null, "src"));
                         } else {
                         }
 
@@ -112,4 +96,5 @@ public class HandleXML {
         });
         thread.start();
     }
+
 }

@@ -39,9 +39,11 @@ public class MainActivity extends Activity {
                 obj.fetchXML();
 
                 while (obj.parsingComplete) ;
-                title.setText(obj.getTitle());
-                description.setText(obj.getDescription());
-                url.setText(obj.getUrl());
+
+                XMLItem item = obj.getItem();
+                title.setText(item.getTitle());
+                description.setText(item.getDescription());
+                url.setText(item.getUrl());
             }
         });
 
