@@ -7,10 +7,14 @@ import android.view.View;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 
 public class MainActivity extends Activity {
-    EditText title, link, description;
+    EditText link;
+    TextView title, description, url;
     Button fetchButton, resultButton;
     private String finalUrl = "http://tutorialspoint.com/android/sampleXML.xml";
     private HandleXML obj;
@@ -20,22 +24,24 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        title = (EditText) findViewById(R.id.editText);
+        title = (TextView) findViewById(R.id.editText);
         link = (EditText) findViewById(R.id.editText2);
-        description = (EditText) findViewById(R.id.editText3);
+        description = (TextView) findViewById(R.id.editText3);
+        url = (TextView) findViewById(R.id.urlText);
 
         fetchButton = (Button) findViewById(R.id.button);
         resultButton = (Button) findViewById(R.id.button2);
         fetchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finalUrl = "http://"+link.getText().toString();
                 obj = new HandleXML(finalUrl);
                 obj.fetchXML();
 
                 while (obj.parsingComplete) ;
                 title.setText(obj.getTitle());
-                link.setText(obj.getLink());
                 description.setText(obj.getDescription());
+                url.setText(obj.getUrl());
             }
         });
 
@@ -43,6 +49,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(MainActivity.this, second.class);
+                in.putExtra("URL", finalUrl);
                 startActivity(in);
             }
         });

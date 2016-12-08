@@ -13,6 +13,7 @@ public class HandleXML {
     private String title = "title";
     private String link = "link";
     private String description = "description";
+    private String url = "";
     private String urlString = null;
     private XmlPullParserFactory xmlFactoryObject;
     public volatile boolean parsingComplete = true;
@@ -32,6 +33,8 @@ public class HandleXML {
     public String getDescription() {
         return description;
     }
+
+    public String getUrl() { return url;}
 
     public void parseXMLAndStoreIt(XmlPullParser myParser) {
         int event;
@@ -59,6 +62,9 @@ public class HandleXML {
                             link = text;
                         } else if (name.equals("description")) {
                             description = text;
+                        } else if (name.equals("img")){
+                            url = myParser.getAttributeValue(null, "src");
+                            Log.d(null,"url"+url);
                         } else {
                         }
 
