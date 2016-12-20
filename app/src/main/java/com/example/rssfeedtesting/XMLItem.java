@@ -25,6 +25,6 @@ public class XMLItem {
     public void setUrl(String url){this.url = url;}
 
     public String toString(){
-        return title+"\n";
+        return title+"\n"+link+"\n"+description+"\n";
     }
 }

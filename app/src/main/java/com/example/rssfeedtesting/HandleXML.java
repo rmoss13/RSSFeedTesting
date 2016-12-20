@@ -1,8 +1,10 @@
 package com.example.rssfeedtesting;
 
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -13,24 +15,26 @@ public class HandleXML {
     private String urlString = null;
     private XmlPullParserFactory xmlFactoryObject;
     public volatile boolean parsingComplete = true;
-    private XMLItem item;
+    private ArrayList<XMLItem> items;
 
     public HandleXML(String url) {
         this.urlString = url;
-        item = new XMLItem();
     }
 
-    public XMLItem getItem(){ return item;}
+    public ArrayList<XMLItem> getItem(){ return items;}
 
     public void parseXMLAndStoreIt(XmlPullParser myParser) {
         int event;
         String text = null;
+        items = new ArrayList<>();
+        XMLItem item = new XMLItem();
 
         try {
             event = myParser.getEventType();
 
             while (event != XmlPullParser.END_DOCUMENT) {
-                String name = myParser.getName();
+                String name = "";
+                name = myParser.getName();
 
                 switch (event) {
                     case XmlPullParser.START_TAG:
@@ -54,8 +58,13 @@ public class HandleXML {
 
                         break;
                 }
-
                 event = myParser.next();
+                if(name!=null) {
+                    if (name.equals("item")) {
+                        items.add(item);
+                        item = new XMLItem();
+                    }
+                }
             }
 
             parsingComplete = false;
